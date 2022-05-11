@@ -1,17 +1,19 @@
 import express from "express"
+import { Crons } from "./cron/scrapTickets.cron";
 import { Routes } from "./routes/index.routes";
 
 export class App {
     private app!: express.Application;
-    private static instance : App
-    private routes : any
-    private constructor(){
+    private static instance: App
+    private routes: any
+
+    private constructor() {
         this.initConfig()
         this.globalRoutes()
     }
 
     public static getInstance() {
-        if(!App.instance) {
+        if (!App.instance) {
             App.instance = new App();
         }
         return App.instance
@@ -20,6 +22,8 @@ export class App {
     private initConfig() {
         this.app = express()
         this.routes = Routes.getInstance()
+
+        this.InitCrons()
     }
 
     public initServer() {
@@ -31,5 +35,9 @@ export class App {
 
     private globalRoutes() {
         this.app.use("/", this.routes.routing())
+    }
+
+    private InitCrons() {
+        Crons()
     }
 }
