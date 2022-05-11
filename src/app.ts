@@ -3,6 +3,7 @@ import { Crons } from "./cron/scrapTickets.cron";
 import { Routes } from "./routes/index.routes";
 
 export class App {
+
     private app!: express.Application;
     private static instance: App
     private routes: any
