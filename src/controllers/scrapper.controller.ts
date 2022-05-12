@@ -9,15 +9,17 @@ export class Scrapper {
                 name : "bhernandez",
                 pass : "brandon1234"
             })
-            
+            console.clear()
             elements.map((element: string) => {
                 
                 if(element.toLowerCase().includes("escorza")) {
-                    console.log(element)
-                }else {
-                    console.log("No hay tickets para Escorza")
+                    console.table(element)
                 }
+                
             })
+            if(elements[elements.length - 1].toLowerCase().includes("escorza")) {
+                console.log("No Hay Tickets")
+            }
 
             res.json({message : "sended"})
         }catch(e) {

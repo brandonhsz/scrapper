@@ -9,6 +9,7 @@ export class App {
     private routes: any
 
     private constructor() {
+        console.clear()
         this.initConfig()
         this.globalRoutes()
     }
@@ -29,7 +30,6 @@ export class App {
 
     public initServer() {
         this.app.listen(8080, () => {
-            console.clear()
             console.log("Server up")
         })
     }

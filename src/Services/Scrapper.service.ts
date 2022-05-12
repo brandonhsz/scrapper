@@ -22,7 +22,7 @@ export const scrapper = async (data: ILogin): Promise<any> => {
     const elements = await (await page.evaluate(() => Array.from(document.querySelectorAll("tr"), element => element.innerText)))
     const element = elements.slice(1, elements.length - 1)
 
-    await page.screenshot({ path: `../../Images/${new Date()}` });
+    //await page.screenshot({ path: `C:\Users\soporte.escorza\Music\pro\scrapper\Images` });
 
     await browser.close();
 

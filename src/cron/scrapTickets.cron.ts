@@ -2,9 +2,10 @@ import cron from 'node-cron';
 import axios from 'axios';
 
 export const Crons = () => {
-
-  cron.schedule('5 * * * *', async () => {
+  console.log("Crons running")
+  cron.schedule('*/10 * * * *', async () => {
     await axios.get('http://localhost:8080/scrap');
+    
   });
 
 }
