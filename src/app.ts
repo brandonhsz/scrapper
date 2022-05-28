@@ -7,6 +7,7 @@ export class App {
     private app!: express.Application;
     private static instance: App
     private routes: any
+    public socket!: any
 
     private constructor() {
         console.clear()
@@ -37,6 +38,7 @@ export class App {
     private globalRoutes() {
         this.app.use("/", this.routes.routing())
     }
+
 
     private InitCrons() {
         Crons()

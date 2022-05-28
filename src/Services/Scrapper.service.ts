@@ -4,7 +4,7 @@ import { ILogin } from "../interfaces/Login.interface";
 
 
 export const scrapper = async (data: ILogin): Promise<any> => {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.setViewport({ width: 1200, height: 720 });
     await page.goto('http://osticket.sto.com.mx/osTicket/upload/scp/login.php');
