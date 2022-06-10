@@ -6,6 +6,7 @@ const socket = io("http://localhost:3000")
 
 
 export class Scrapper {
+    private static elementsToSend: string[] = []
 
     public static async scrap(req: e.Request, res: e.Response) {
 
@@ -16,19 +17,21 @@ export class Scrapper {
             })
             console.clear()
             elements.map((element: string) => {
-
-                if (element.toLowerCase().includes("escorza")) {
-                    socket.emit("scrapper", element)
-                    console.table(element)
+                if (!element) return
+                else {
+                    console.log("entre")
+                    if (element.toLowerCase().includes("escorza")) {
+                        socket.emit("scrapper", element)
+                        this.elementsToSend.push(element)
+                        console.table(element)
+                    }
+                    res.json({
+                        message: "OK",
+                        data: this.elementsToSend
+                    })
                 }
-
             })
-            if (elements[elements.length - 1].toLowerCase().includes("escorza")) {
-
-                console.log("No Hay Tickets")
-            }
-
-            res.json({ message: "sended" })
+            res.json({ message: "No hay tickets" })
         } catch (e) {
             console.log(e)
             res.json({ messagge: "error" })

@@ -18,7 +18,6 @@ export const scrapper = async (data: ILogin): Promise<any> => {
     ]).catch(e => {
         console.log(`Error en login \n user: ${data.name} \n pass: ${data.pass}`)
     })
-
     const elements = await (await page.evaluate(() => Array.from(document.querySelectorAll("tr"), element => element.innerText)))
     const element = elements.slice(1, elements.length - 1)
 
