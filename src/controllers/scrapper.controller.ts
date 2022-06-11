@@ -6,7 +6,7 @@ const socket = io("http://localhost:3000")
 
 
 export class Scrapper {
-    private static elementsToSend: string[] = []
+    private static elementsToSend: any[] = [{ message: "escorza" }]
 
     public static async scrap(req: e.Request, res: e.Response) {
 

@@ -1,7 +1,7 @@
 import express from "express"
 import { Crons } from "./cron/scrapTickets.cron";
 import { Routes } from "./routes/index.routes";
-
+import cors from "cors";
 export class App {
 
     private app!: express.Application;
@@ -25,7 +25,7 @@ export class App {
     private initConfig() {
         this.app = express()
         this.routes = Routes.getInstance()
-
+        this.app.use(cors())
         this.InitCrons()
     }
 
