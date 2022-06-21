@@ -1,4 +1,10 @@
 import { Expo } from 'expo-server-sdk';
+import { ITicket } from "../controllers/scrapper.controller";
+interface IData {
+  escorza: ITicket[],
+  revo: ITicket[],
+  tlajo: ITicket[]
+}
 
 let mensajes = 0;
 const voidMessage = {
@@ -11,7 +17,7 @@ const voidMessage = {
 
 }
 
-export const expoService = (data) => {
+export const expoService = (data: any) => {
   // Create a new Expo SDK client
   // optionally providing an access token if you have enabled push security
   let expo = new Expo({ accessToken: process.env.EXPO_ACCESS_TOKEN });
@@ -28,17 +34,24 @@ export const expoService = (data) => {
       continue;
     }
 
-    if (JSON.stringify(mensajes) !== JSON.stringify(data) || JSON.stringify(mensajes) !== JSON.stringify(voidMessage)) {
+
+    if (data.escorza.length > 0 || data.revo.length > 0 || data.tlajo.length > 0, mensajes !== (data.escorza.length + data.revo.length + data.tlajo.length)) {
       messages.push({
         to: pushToken,
         sound: 'default',
-        body: `${data.data.escorza.length} tickets de escorza\n ${data.data.revo.length} tickets de revolución\n ${data.data.tlajo.length} tickets de tlajomulco`,
+        body: `${data.escorza.length} tickets de escorza\n ${data.revo.length} tickets de revolución\n ${data.tlajo.length} tickets de tlajomulco`,
         data: data
       })
+
+      mensajes = data.escorza.length + data.revo.length + data.tlajo.length;
     }
-    mensajes = data;
-    console.log(`estructura: ${JSON.stringify(mensajes)}`)
-    console.log(`estructura: ${JSON.stringify(voidMessage)}`)
+
+    // console.log(`estructura1: ${JSON.stringify(mensajes)}`)
+    // console.log(`estructura2: ${JSON.stringify(voidMessage)}`)
+    // console.log(`estructura3: ${JSON.stringify(data)}`)
+
+    // console.log(`${JSON.stringify(mensajes) === JSON.stringify(data)}`)
+
   }
 
   // The Expo push notification service accepts batches of notifications so

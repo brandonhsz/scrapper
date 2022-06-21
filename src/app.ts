@@ -30,7 +30,7 @@ export class App {
     }
 
     public initServer() {
-        this.app.listen(8080, () => {
+        this.app.listen(8081, () => {
             console.log("Server up")
         })
     }

@@ -4,40 +4,39 @@ import { io } from "socket.io-client";
 import { expoService } from "../Services/expo.service";
 
 const socket = io("http://localhost:3000")
-
+export interface ITicket {
+    TicketNumber: string,
+    TicketTime: string,
+    TicketSubjet: string,
+    TicketAuthor: string,
+    TicketBranch: string,
+}
 
 export class Scrapper {
     public static async scrap(req: e.Request, res: e.Response) {
-        const elementsEscorza: string[] = []
-        const elementsRevo: string[] = []
-        const elementsTlajo: string[] = []
+        const elementsEscorza: ITicket[] = []
+        const elementsRevo: ITicket[] = []
+        const elementsTlajo: ITicket[] = []
         try {
             const elements: any[] = await scrapper({
                 name: "bhernandez",
                 pass: "brandonhs"
             })
-            console.clear()
-            elements.map((element: string) => {
+            console.log(elements)
+            elements.map((element: ITicket) => {
                 if (!element) return
                 else {
-                    if (element.toLowerCase().includes("escorza")) {
+                    if (element.TicketBranch === "Escorza") {
                         elementsEscorza.push(element)
                     }
-                    else if (element.toLowerCase().includes("revolucion")) {
-                        elementsRevo.push(element)
-                    }
-                    else if (element.toLowerCase().includes("tlajomulco")) {
-                        elementsTlajo.push(element)
-                    }
-
                 }
             })
             expoService({
-                data: {
-                    escorza: elementsEscorza,
-                    revo: elementsRevo,
-                    tlajo: elementsTlajo
-                }
+
+                escorza: elementsEscorza,
+                revo: elementsRevo,
+                tlajo: elementsTlajo
+
             })
             res.json({
                 data: {
