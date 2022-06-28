@@ -1,5 +1,7 @@
 import { Expo } from 'expo-server-sdk';
 import { ITicket } from "../controllers/scrapper.controller";
+
+import Tickets from "../schemas/Tickets.schema"
 interface IData {
   escorza: ITicket[],
   revo: ITicket[],
@@ -17,14 +19,14 @@ const voidMessage = {
 
 }
 
-export const expoService = (data: any) => {
+export const expoService = async (data: any) => {
   // Create a new Expo SDK client
   // optionally providing an access token if you have enabled push security
   let expo = new Expo({ accessToken: process.env.EXPO_ACCESS_TOKEN });
 
   // Create the messages that you want to send to clients
   let messages = [];
-  let somePushTokens = ["ExponentPushToken[V8gOc9DVd0JvYEwkGWbr6M]"]
+  let somePushTokens = ["ExponentPushToken[iMbBReIVXhQJkDL9LTQzgp]"];
   for (let pushToken of somePushTokens) {
     // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
 
@@ -36,6 +38,15 @@ export const expoService = (data: any) => {
 
 
     if (data.escorza.length > 0 || data.revo.length > 0 || data.tlajo.length > 0, mensajes !== (data.escorza.length + data.revo.length + data.tlajo.length)) {
+
+      const TicketsToSend = new Tickets({
+        escorza: data.escorza,
+        revo: data.revo,
+        tlajo: data.tlajo
+      })
+      await Tickets.remove({})
+      await TicketsToSend.save()
+
       messages.push({
         to: pushToken,
         sound: 'default',

@@ -3,6 +3,8 @@ import { scrapper } from "../Services/Scrapper.service";
 import { io } from "socket.io-client";
 import { expoService } from "../Services/expo.service";
 
+import Tickets from "../schemas/Tickets.schema"
+
 const socket = io("http://localhost:3000")
 export interface ITicket {
     TicketNumber: string,
@@ -29,8 +31,18 @@ export class Scrapper {
                     if (element.TicketBranch === "Escorza") {
                         elementsEscorza.push(element)
                     }
+                    else if (element.TicketBranch === "Revolución") {
+                        elementsRevo.push(element)
+                    }
+
+                    else if (element.TicketBranch === "Tlajomulco") {
+                        elementsTlajo.push(element)
+                    }
                 }
             })
+
+            
+
             expoService({
 
                 escorza: elementsEscorza,
@@ -38,6 +50,7 @@ export class Scrapper {
                 tlajo: elementsTlajo
 
             })
+
             res.json({
                 data: {
                     escorza: elementsEscorza,

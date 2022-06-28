@@ -1,7 +1,10 @@
 import express from "express"
+import cors from "cors";
+import mongoose from "mongoose";
+
 import { Crons } from "./cron/scrapTickets.cron";
 import { Routes } from "./routes/index.routes";
-import cors from "cors";
+
 export class App {
 
     private app!: express.Application;
@@ -12,6 +15,7 @@ export class App {
     private constructor() {
         console.clear()
         this.initConfig()
+        this.initDB()
         this.globalRoutes()
     }
 
@@ -22,6 +26,17 @@ export class App {
         return App.instance
     }
 
+    private async initDB() {
+        try {
+            await mongoose.connect("mongodb://mongo:Mz8SfuU2Q61xAkOrhBbU@containers-us-west-72.railway.app:7502")
+        } catch (e) {
+            console.log("Error al conectar a la base de datos")
+        } finally {
+            console.log("Base de datos conectada")
+        }
+
+    }
+
     private initConfig() {
         this.app = express()
         this.routes = Routes.getInstance()
@@ -30,7 +45,7 @@ export class App {
     }
 
     public initServer() {
-        this.app.listen(8081, () => {
+        this.app.listen(8080, () => {
             console.log("Server up")
         })
     }
