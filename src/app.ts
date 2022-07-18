@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 
 import { Crons } from "./cron/scrapTickets.cron";
 import { Routes } from "./routes/index.routes";
+import { initFmcService } from './Services/fmc.service';
 
 export class App {
 
@@ -42,6 +43,7 @@ export class App {
         this.routes = Routes.getInstance()
         this.app.use(cors())
         this.InitCrons()
+        initFmcService()
     }
 
     public initServer() {

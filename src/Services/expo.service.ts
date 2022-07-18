@@ -1,5 +1,5 @@
-import { Expo } from 'expo-server-sdk';
-import { ITicket } from "../controllers/scrapper.controller";
+import { Expo, ExpoPushTicket } from 'expo-server-sdk';
+import { ITicket } from "../interfaces/Ticket.interface";
 
 import Tickets from "../schemas/Tickets.schema"
 interface IData {
@@ -20,13 +20,14 @@ const voidMessage = {
 }
 
 export const expoService = async (data: any) => {
+  console.log("funciona")
   // Create a new Expo SDK client
   // optionally providing an access token if you have enabled push security
   let expo = new Expo({ accessToken: process.env.EXPO_ACCESS_TOKEN });
 
   // Create the messages that you want to send to clients
   let messages = [];
-  let somePushTokens = ["ExponentPushToken[iMbBReIVXhQJkDL9LTQzgp]"];
+  let somePushTokens = ["ExponentPushToken[TZf87xMIgNUoLc63zjf_F4]"];
   for (let pushToken of somePushTokens) {
     // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
 
@@ -70,7 +71,7 @@ export const expoService = async (data: any) => {
   // recommend you batch your notifications to reduce the number of requests
   // and to compress them (notifications with similar content will get
   // compressed).
-  let chunks = expo.chunkPushNotifications(messages);
+  let chunks = expo.chunkPushNotifications(messages as any);
   let tickets = [];
   (async () => {
     // Send the chunks to the Expo push notification service. There are

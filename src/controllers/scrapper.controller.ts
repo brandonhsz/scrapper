@@ -1,30 +1,22 @@
 import e from "express";
+
 import { scrapper } from "../Services/Scrapper.service";
-import { io } from "socket.io-client";
 import { expoService } from "../Services/expo.service";
 
-import Tickets from "../schemas/Tickets.schema"
-
-const socket = io("http://localhost:3000")
-export interface ITicket {
-    TicketNumber: string,
-    TicketTime: string,
-    TicketSubjet: string,
-    TicketAuthor: string,
-    TicketBranch: string,
-}
-
+import { ITicket } from "../interfaces/Ticket.interface";
+import { notificationFMCService } from "../Services/fmc.service";
 export class Scrapper {
     public static async scrap(req: e.Request, res: e.Response) {
+
         const elementsEscorza: ITicket[] = []
         const elementsRevo: ITicket[] = []
         const elementsTlajo: ITicket[] = []
+
         try {
             const elements: any[] = await scrapper({
                 name: "bhernandez",
                 pass: "brandonhs"
             })
-            console.log(elements)
             elements.map((element: ITicket) => {
                 if (!element) return
                 else {
@@ -41,14 +33,18 @@ export class Scrapper {
                 }
             })
 
-            
+            // expoService({
 
-            expoService({
+            //     escorza: elementsEscorza,
+            //     revo: elementsRevo,
+            //     tlajo: elementsTlajo
 
+            // })
+
+            notificationFMCService({
                 escorza: elementsEscorza,
                 revo: elementsRevo,
                 tlajo: elementsTlajo
-
             })
 
             res.json({
