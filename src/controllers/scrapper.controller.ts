@@ -1,7 +1,6 @@
 import e from "express";
 
 import { scrapper } from "../Services/Scrapper.service";
-import { expoService } from "../Services/expo.service";
 
 import { ITicket } from "../interfaces/Ticket.interface";
 import { notificationFMCService } from "../Services/fmc.service";
@@ -32,14 +31,6 @@ export class Scrapper {
                     }
                 }
             })
-
-            // expoService({
-
-            //     escorza: elementsEscorza,
-            //     revo: elementsRevo,
-            //     tlajo: elementsTlajo
-
-            // })
 
             notificationFMCService({
                 escorza: elementsEscorza,

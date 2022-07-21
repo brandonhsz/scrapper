@@ -19,7 +19,8 @@ export class Routes {
     public routing(): e.Router {
         this.router = e.Router()
 
-        this.router.get("/scrap", Scrapper.scrap)
+        this.router.get("/scrapMorning", Scrapper.scrap)
+        this.router.get("/scrapAfternoon", Scrapper.scrap)
 
         return this.router
     }
