@@ -27,12 +27,8 @@ export const initFmcService = () => {
   });
 }
 
-export const notificationFMCService = async (data: any) => {
+export const notificationFMCService = async (data: any, topic: string) => {
   console.log("funciona");
-
-  const topic = "tickets"
-
-
 
   if (
     (data.escorza.length > 0 || data.revo.length > 0 || data.tlajo.length > 0,

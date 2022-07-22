@@ -32,18 +32,18 @@ export class Scrapper {
                 }
             })
 
-            notificationFMCService({
+            const dataToSend: any = {
                 escorza: elementsEscorza,
                 revo: elementsRevo,
                 tlajo: elementsTlajo
-            })
+            }
+
+            if (req.url.includes("/scrapMorning")) notificationFMCService(dataToSend, "morningTurn")
+            else if (req.url.includes("/scrapAfternoon")) notificationFMCService(dataToSend, "afternoonTurn")
+            else notificationFMCService(dataToSend, "morningTurn")
 
             res.json({
-                data: {
-                    escorza: elementsEscorza,
-                    revo: elementsRevo,
-                    tlajo: elementsTlajo
-                }
+                data: dataToSend,
             })
         } catch (e) {
             console.log(e)
